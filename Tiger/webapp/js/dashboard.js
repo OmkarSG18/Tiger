@@ -262,7 +262,7 @@ function fallbackScore(data, cibilResult) {
     renderRadar(factors);
 
     const cibilScoreDisplay = data.LOAN_REPAYMENT_HISTORY > 0.3
-        ? Math.max(300, Math.round(score * 0.6 + (Math.random() * 50 - 25)))
+        ? Math.max(300, Math.round(score * 0.6 - 10))
         : 'NH';
 
     renderComparison({
