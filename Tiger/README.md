@@ -33,6 +33,7 @@
 ```
 Tiger/
 ├── app.py                    # Flask REST API server
+├── README.md                 # Project documentation
 ├── requirements.txt          # Python dependencies
 ├── data/
 │   ├── alternative_credit_data.csv   # Synthetic training dataset
