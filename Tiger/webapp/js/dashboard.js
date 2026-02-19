@@ -771,6 +771,7 @@ function submitCustomProfile() {
     currentProfile = { data, name: 'Custom Profile', story: 'Your custom profile' };
     scoreProfile(data);
     switchTab('score');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function resetCustomForm() {
