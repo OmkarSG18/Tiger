@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CredAlt - Alternative Credit Scoring Engine for India's underbanked population">
+    <title>CredAlt &#8212; Alternative Credit Scoring Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Language Switcher (top-right) -->
+        <div style="position:fixed; top:20px; right:20px; z-index:100;" id="loginLangSwitcher"></div>
+
+        <!-- Hero Header -->
+        <header class="login-header">
+            <div class="logo">Cred<span>Alt</span></div>
+            <p class="tagline" data-i18n="tagline">Alternative Credit Scoring for Everyone</p>
+            <p class="subtitle" data-i18n="subtitle">Empowering India's underbanked with fair, data-driven trust scores
+            </p>
+        </header>
+
+        <!-- Section Title -->
+        <div class="section-title">
+            <h2 data-i18n="selectProfileType">Select Your Profile Type</h2>
+            <p data-i18n="selectProfileDesc">Choose a role to explore pre-trained credit profiles, or create your own
+            </p>
+        </div>
+
+        <!-- Role Selection Grid -->
+        <div class="role-grid stagger" id="roleGrid">
+            <div class="role-card animate-in" onclick="selectRole('street_vendor')" id="card-street_vendor">
+                <span class="role-icon">&#128722;</span>
+                <div class="role-name">Street Vendor</div>
+                <div class="role-desc">Daily UPI sales, micro-transactions, hawker with cash-heavy business</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('domestic_worker')" id="card-domestic_worker">
+                <span class="role-icon">&#127968;</span>
+                <div class="role-name">Domestic Worker</div>
+                <div class="role-desc">Monthly salary, utility regularity, stable long-term employment</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('freelancer')" id="card-freelancer">
+                <span class="role-icon">&#128187;</span>
+                <div class="role-name">Freelancer</div>
+                <div class="role-desc">Variable income, digital-first, diverse payment sources</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('migrant_worker')" id="card-migrant_worker">
+                <span class="role-icon">&#128642;</span>
+                <div class="role-name">Migrant Worker</div>
+                <div class="role-desc">Remittance patterns, mobile recharges, inter-city cash flows</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('kirana_owner')" id="card-kirana_owner">
+                <span class="role-icon">&#127978;</span>
+                <div class="role-name">Kirana Store Owner</div>
+                <div class="role-desc">High UPI volume, supplier payments, inventory turnover</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('gig_worker')" id="card-gig_worker">
+                <span class="role-icon">&#128661;</span>
+                <div class="role-name">Gig Worker</div>
+                <div class="role-desc">App-based earnings, delivery/ride data, surge patterns</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('student')" id="card-student">
+                <span class="role-icon">&#127891;</span>
+                <div class="role-name">College Student</div>
+                <div class="role-desc">Education expenses, part-time income, high digital footprint</div>
+            </div>
+
+            <div class="role-card animate-in" onclick="selectRole('rural_farmer')" id="card-rural_farmer">
+                <span class="role-icon">&#127806;</span>
+                <div class="role-name">Rural Farmer</div>
+                <div class="role-desc">Seasonal income, govt subsidies, cooperative transactions</div>
+            </div>
+
+            <!-- Custom Profile Card -->
+            <div class="role-card custom-card animate-in" onclick="selectRole('custom')" id="card-custom">
+                <span class="role-icon">&#10024;</span>
+                <div class="role-name" data-i18n="customProfile">Custom Profile</div>
+                <div class="role-desc" data-i18n="customProfileDesc">Enter your own values and see your alternative
+                    credit score</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CredAlt Dashboard - View your alternative credit score and financial roadmap">
+    <title>CredAlt — Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Analyzing alternative signals...</div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="brand">Cred<span>Alt</span></div>
+            <div class="topbar-right">
+                <div id="langSwitcher"></div>
+                <div class="user-info">
+                    <span id="userRoleLabel">Loading...</span>
+                    <div class="user-avatar" id="userAvatar">&#128100;</div>
+                </div>
+                <a href="index.html" class="btn btn-secondary" data-i18n="switchRole"
+                    style="font-size:0.8rem; padding:8px 16px;">&#8592; Switch
+                    Role</a>
+            </div>
+        </div>
+
+        <!-- Profile Selector Bar -->
+        <div class="profile-bar" id="profileBar">
+            <label for="profileSelect" data-i18n="selectProfile">Select Profile:</label>
+            <select class="form-select" id="profileSelect" onchange="onProfileChange()">
+                <option value="" data-i18n="chooseProfile">-- Choose a profile --</option>
+            </select>
+            <span id="profileStory"
+                style="font-size:0.82rem; color: var(--text-secondary); flex:2; min-width:200px;"></span>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-bar" id="tabBar">
+            <button class="tab-btn active" onclick="switchTab('score')" id="tabScore">&#128202; <span
+                    data-i18n="tabScore">Score Analysis</span></button>
+            <button class="tab-btn" onclick="switchTab('breakdown')" id="tabBreakdown">&#128200; <span
+                    data-i18n="tabBreakdown">Factor Breakdown</span></button>
+            <button class="tab-btn" onclick="switchTab('radar')" id="tabRadar">&#127919; <span
+                    data-i18n="tabRadar">Signal Radar</span></button>
+            <button class="tab-btn" onclick="switchTab('goal')" id="tabGoal">&#128506;&#65039; <span
+                    data-i18n="tabGoal">Goal Planner</span></button>
+            <button class="tab-btn" onclick="switchTab('custom')" id="tabCustom" style="display:none;">&#9999;&#65039;
+                <span data-i18n="tabCustom">Custom
+                    Input</span></button>
+        </div>
+
+        <!-- TAB: Score Analysis -->
+        <div class="tab-content active" id="panelScore">
+            <div class="score-section">
+                <!-- Score Ring -->
+                <div class="glass-card score-main">
+                    <div class="score-ring-wrapper">
+                        <svg class="score-ring" viewBox="0 0 200 200">
+                            <defs>
+                                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#c8f060" />
+                                    <stop offset="100%" style="stop-color:#60f0a0" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="score-ring-bg" cx="100" cy="100" r="90" />
+                            <circle class="score-ring-fill" cx="100" cy="100" r="90" id="scoreRingFill" />
+                        </svg>
+                        <div class="score-value">
+                            <div class="number gradient-text" id="scoreNumber">&#8212;</div>
+                            <div class="label" data-i18n="credaltScore">CredAlt Score</div>
+                        </div>
+                    </div>
+                    <div id="riskBadge" class="badge badge-good">CALCULATING</div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="glass-card">
+                    <h3 style="font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; color:var(--text-muted); font-family:var(--font-display);"
+                        data-i18n="quickStats">Quick Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color:var(--accent3);" id="statIncome">&#8212;</div>
+                            <div class="stat-label" data-i18n="monthlyIncome">Monthly Income</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color:var(--green);" id="statSavings">&#8212;</div>
+                            <div class="stat-label" data-i18n="savings">Savings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color:var(--accent2);" id="statUPI">&#8212;</div>
+                            <div class="stat-label" data-i18n="upiTxns">UPI Txns/mo</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color:var(--accent);" id="statUtility">&#8212;</div>
+                            <div class="stat-label" data-i18n="billRegularity">Bill Regularity</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CIBIL Comparison -->
+                <div class="glass-card comparison-card">
+                    <h3 style="font-size:1.05rem; margin-bottom:4px;" data-i18n="traditionalVsCredalt">Traditional vs
+                        CredAlt</h3>
+                    <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:8px;" data-i18n="whyAltScoring">
+                        Why alternative scoring
+                        matters</p>
+                    <div class="comparison-box">
+                        <div class="compare-item cibil">
+                            <div class="compare-label" data-i18n="cibilScore">CIBIL Score</div>
+                            <div class="compare-score" id="cibilScore">NH</div>
+                            <div class="compare-status" id="cibilStatus" data-i18n="noHistory">No History</div>
+                        </div>
+                        <div class="compare-item credalt">
+                            <div class="compare-label" data-i18n="credaltScore">CredAlt Score</div>
+                            <div class="compare-score" id="credaltScore">&#8212;</div>
+                            <div class="compare-status" id="credaltStatus">Pending</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Score Reasoning Section -->
+            <div class="reasoning-section" id="reasoningSection" style="display:none;">
+                <div class="glass-card reasoning-card">
+                    <div class="reasoning-header">
+                        <div class="reasoning-icon" id="reasoningIcon">&#128161;</div>
+                        <div>
+                            <h3 data-i18n="scoreReasoning">Score Reasoning</h3>
+                            <p class="reasoning-subtitle" data-i18n="whyThisScore">Why did you get this score?</p>
+                        </div>
+                    </div>
+                    <div class="reasoning-body" id="reasoningBody">
+                        <!-- Dynamic reasoning text injected here -->
+                    </div>
+
+                    <!-- CIBIL Weight Breakdown -->
+                    <div class="cibil-weights" id="cibilWeights">
+                        <div class="weight-item">
+                            <div class="weight-header">
+                                <span class="weight-label" data-i18n="paymentHistory">Payment History</span>
+                                <span class="weight-pct">30%</span>
+                            </div>
+                            <div class="weight-bar">
+                                <div class="weight-bar-fill" id="weightPayment" style="width:0%"></div>
+                            </div>
+                            <span class="weight-score" id="weightPaymentScore">--</span>
+                        </div>
+                        <div class="weight-item">
+                            <div class="weight-header">
+                                <span class="weight-label" data-i18n="creditExposure">Credit Exposure</span>
+                                <span class="weight-pct">25%</span>
+                            </div>
+                            <div class="weight-bar">
+                                <div class="weight-bar-fill" id="weightExposure" style="width:0%"></div>
+                            </div>
+                            <span class="weight-score" id="weightExposureScore">--</span>
+                        </div>
+                        <div class="weight-item">
+                            <div class="weight-header">
+                                <span class="weight-label" data-i18n="creditTypeDuration">Credit Type & Duration</span>
+                                <span class="weight-pct">25%</span>
+                            </div>
+                            <div class="weight-bar">
+                                <div class="weight-bar-fill" id="weightType" style="width:0%"></div>
+                            </div>
+                            <span class="weight-score" id="weightTypeScore">--</span>
+                        </div>
+                        <div class="weight-item">
+                            <div class="weight-header">
+                                <span class="weight-label" data-i18n="newCreditInquiries">New Credit / Inquiries</span>
+                                <span class="weight-pct">20%</span>
+                            </div>
+                            <div class="weight-bar">
+                                <div class="weight-bar-fill" id="weightInquiries" style="width:0%"></div>
+                            </div>
+                            <span class="weight-score" id="weightInquiriesScore">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Improvement Checklist (shown when score < 750) -->
+                <div class="glass-card improvement-card" id="improvementCard" style="display:none;">
+                    <div class="improvement-header">
+                        <span class="improvement-icon">&#9989;</span>
+                        <div>
+                            <h3 data-i18n="improvementChecklist">Improvement Checklist</h3>
+                            <p class="improvement-subtitle" data-i18n="actionsToImprove">Actions to improve your score
+                            </p>
+                        </div>
+                    </div>
+                    <div class="improvement-list" id="improvementList">
+                        <!-- Dynamic checklist items injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Factor Breakdown -->
+        <div class="tab-content" id="panelBreakdown">
+            <div class="glass-card" style="max-width:800px;">
+                <h3 style="font-size:1.15rem; margin-bottom:24px;" data-i18n="contributingFactors">Contributing Factors
+                </h3>
+                <div class="factor-list" id="factorList">
+                    <p style="color:var(--text-muted);">Select a profile to see factor breakdown</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Signal Radar -->
+        <div class="tab-content" id="panelRadar">
+            <div class="glass-card" style="max-width:600px; margin:0 auto;">
+                <h3 style="font-size:1.15rem; margin-bottom:8px; text-align:center;" data-i18n="signalStrengthRadar">
+                    Signal Strength Radar</h3>
+                <p style="font-size:0.82rem; color:var(--text-muted); text-align:center; margin-bottom:16px;"
+                    data-i18n="signalDesc">Strength
+                    of alternative data signals across categories</p>
+                <div class="radar-container">
+                    <canvas id="radarCanvas" class="radar-chart" width="320" height="320"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Goal Planner -->
+        <div class="tab-content" id="panelGoal">
+            <div class="glass-card">
+                <h3 style="font-size:1.15rem; margin-bottom:8px;">&#128506;&#65039; <span
+                        data-i18n="goalPlannerTitle">Financial Goal Planner</span></h3>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:20px;">Set a financial goal and get
+                    a personalized roadmap to achieve it</p>
+
+                <!-- Goal Selector -->
+                <div class="goal-selector" id="goalSelector"></div>
+
+                <!-- Goal Inputs -->
+                <div class="goal-inputs">
+                    <div class="form-group">
+                        <label data-i18n="targetAmount">Target Amount (&#8377;)</label>
+                        <input type="number" class="form-input" id="goalAmount" value="600000" min="1000">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="timeline">Timeline (months)</label>
+                        <input type="number" class="form-input" id="goalTimeline" value="24" min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="currentSavings">Current Savings (&#8377;)</label>
+                        <input type="number" class="form-input" id="goalSavings" value="10000" min="0">
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button class="btn btn-primary" onclick="generateGoalPlan()" style="width:100%;"><span
+                                data-i18n="generateRoadmap">Generate
+                                Roadmap</span> &#128640;</button>
+                    </div>
+                </div>
+
+                <!-- Roadmap Results -->
+                <div id="goalResults" style="display:none;">
+                    <div id="feasibilityBanner"></div>
+                    <div class="savings-summary" id="savingsSummary"></div>
+                    <h4 style="font-size:1rem; margin-bottom:16px; color:var(--accent3);">&#128205; Your Roadmap
+                    </h4>
+                    <div class="roadmap-timeline" id="roadmapTimeline"></div>
+                    <h4 style="font-size:1rem; margin:24px 0 12px; color:var(--accent2);">&#128161; Tips for Your
+                        Role
+                    </h4>
+                    <ul class="tips-list" id="tipsList"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Custom Input -->
+        <div class="tab-content" id="panelCustom">
+            <div class="glass-card">
+                <h3 style="font-size:1.15rem; margin-bottom:8px;">&#9999;&#65039; <span data-i18n="customProfile">Custom
+                        Profile</span></h3>
+                <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:20px;">Enter your own data to
+                    calculate a personalized CredAlt score</p>
+                <div class="custom-form-grid" id="customForm"></div>
+                <div style="margin-top:24px; display:flex; gap:12px;">
+                    <button class="btn btn-success" onclick="submitCustomProfile()"><span
+                            data-i18n="calculateScore">Calculate Score</span> &#128302;</button>
+                    <button class="btn btn-secondary" onclick="resetCustomForm()" data-i18n="reset">Reset</button>
+                    <select class="form-select" id="customRoleSelect" style="max-width:200px;">
+                        <option value="Street Vendor">Street Vendor</option>
+                        <option value="Domestic Worker">Domestic Worker</option>
+                        <option value="Freelancer">Freelancer</option>
+                        <option value="Migrant Worker">Migrant Worker</option>
+                        <option value="Kirana Store Owner">Kirana Store Owner</option>
+                        <option value="Gig Worker">Gig Worker</option>
+                        <option value="College Student">College Student</option>
+                        <option value="Rural Farmer">Rural Farmer</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/profiles.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
