@@ -32,27 +32,28 @@
 
 ```
 Tiger/
-├── app.py                    # Flask REST API server
-├── README.md                 # Project documentation
-├── requirements.txt          # Python dependencies
-├── data/
-│   ├── alternative_credit_data.csv   # Synthetic training dataset
-│   └── generate_data.py              # Data generation script
-├── model/
-│   ├── credit_scoring_model.pkl      # Trained ML model
-│   ├── feature_columns.pkl           # Feature column list
-│   ├── feature_defaults.pkl          # Default feature values
-│   ├── label_encoders.pkl            # Label encoders for categorical features
-│   └── train_model.py               # Model training script
-└── webapp/
-    ├── index.html            # Main scoring page
-    ├── dashboard.html        # Analytics dashboard
-    ├── css/style.css         # Styles
-    └── js/
-        ├── app.js            # Main app logic
-        ├── dashboard.js      # Dashboard logic
-        ├── i18n.js           # Internationalization
-        └── profiles.js       # User role profiles
+├── 🐍 app.py                    # Flask REST API server
+├── 📝 README.md                 # Project documentation
+├── 📄 requirements.txt          # Python dependencies
+├── 📁 data/
+│   ├── 📄 alternative_credit_data.csv   # Synthetic training dataset
+│   └── 🐍 generate_data.py              # Data generation script
+├── 📁 model/
+│   ├── 📄 credit_scoring_model.pkl      # Trained ML model
+│   ├── 📄 feature_columns.pkl           # Feature column list
+│   ├── 📄 feature_defaults.pkl          # Default feature values
+│   ├── 📄 label_encoders.pkl            # Label encoders for categorical features
+│   └── 🐍 train_model.py               # Model training script
+└── 📁 webapp/
+    ├── 🌐 index.html            # Main scoring page
+    ├── 🌐 dashboard.html        # Analytics dashboard
+    ├── 📁 css/
+    │   └── 🎨 style.css         # Styles
+    └── 📁 js/
+        ├── 📜 app.js            # Main app logic
+        ├── 📜 dashboard.js      # Dashboard logic
+        ├── 📜 i18n.js           # Internationalization
+        └── 📜 profiles.js       # User role profiles
 ```
 
 ---
