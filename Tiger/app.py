@@ -134,7 +134,7 @@ def predict():
         # Generate CIBIL comparison
         cibil_score = "NH"  # No History for underbanked
         if data.get("LOAN_REPAYMENT_HISTORY", 0) > 0.3:
-            cibil_score = max(300, int(credit_score * 0.6 + np.random.randint(-50, 30)))
+            cibil_score = max(300, int(credit_score * 0.6 - 10))
 
         cibil_status = "No History"
         if isinstance(cibil_score, int):
