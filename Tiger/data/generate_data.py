@@ -306,13 +306,63 @@ def generate_role_data(role, n=50):
     return records
 
 
+def generate_low_signal_data(role, n=8):
+    """Generate extreme low-signal profiles — always CREDIT_WORTHY = 0.
+    
+    These represent people with virtually no financial digital footprint:
+    no UPI, no savings, no bank account, no insurance, etc.
+    """
+    records = []
+    for _ in range(n):
+        # Very low income, near-zero everything
+        income = int(np.random.uniform(0, 6000))
+        record = {
+            "INCOME": income,
+            "UPI_TRANSACTIONS": int(np.random.uniform(0, 3)),
+            "UPI_AVG_AMOUNT": int(np.random.uniform(0, 50)),
+            "UTILITY_BILLS_PAID": int(np.random.uniform(0, 2)),
+            "UTILITY_REGULARITY": round(np.random.uniform(0.0, 0.15), 2),
+            "MOBILE_RECHARGE_FREQ": int(np.random.uniform(0, 2)),
+            "RENT_PAYMENT": int(np.random.choice([0, 0, 0, 500, 1000])),
+            "SAVINGS_BALANCE": int(np.random.uniform(0, 1000)),
+            "LOAN_REPAYMENT_HISTORY": 0.0,
+            "DIGITAL_FOOTPRINT": int(np.random.uniform(0, 5)),
+            "SOCIAL_MEDIA_ACTIVITY": int(np.random.uniform(0, 3)),
+            "EDUCATION_LEVEL": np.random.choice([0, 0, 0, 1]),
+            "EMPLOYMENT_STABILITY": round(np.random.uniform(0.0, 0.12), 2),
+            "FAMILY_SIZE": int(np.random.uniform(3, 8)),
+            "AGE": int(np.random.uniform(18, 60)),
+            "GENDER": np.random.choice(["M", "F"]),
+            "LOCATION_TYPE": np.random.choice(["rural", "rural", "semi-urban"]),
+            "DEVICE_TYPE": np.random.choice(["basic", "basic", "basic", "smartphone"]),
+            "APP_USAGE_HOURS": round(np.random.uniform(0.0, 0.3), 1),
+            "BANK_ACCOUNT_AGE": round(np.random.uniform(0.0, 0.5), 1),
+            "NUM_FINANCIAL_PRODUCTS": 0,
+            "INSURANCE_STATUS": 0,
+            "REMITTANCE_FREQUENCY": 0,
+            "GOVT_SUBSIDY_RECIPIENT": np.random.choice([0, 0, 1]),
+            "E_COMMERCE_ACTIVITY": 0,
+            "PEER_LENDING_SCORE": round(np.random.uniform(0.0, 0.05), 2),
+            "ROLE": role,
+            "CREDIT_WORTHY": 0,  # Always not creditworthy
+        }
+        records.append(record)
+    return records
+
+
 def main():
     all_records = []
     for role in ROLES:
+        # Regular profiles
         records = generate_role_data(role, n=50)
         all_records.extend(records)
         worthy = sum(r["CREDIT_WORTHY"] for r in records)
         print(f"  {role}: {len(records)} records, {worthy} creditworthy ({worthy*2}%)")
+
+        # Extreme low-signal profiles (always not creditworthy)
+        low_records = generate_low_signal_data(role, n=8)
+        all_records.extend(low_records)
+        print(f"    + {len(low_records)} extreme low-signal records (all non-creditworthy)")
 
     df = pd.DataFrame(all_records)
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
@@ -327,3 +377,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

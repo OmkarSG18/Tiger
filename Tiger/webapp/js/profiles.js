@@ -455,45 +455,45 @@ const CUSTOM_FIELDS = [
             { key: "AGE", label: "Age", type: "number", min: 18, max: 70, default: 30 },
             { key: "GENDER", label: "Gender", type: "select", options: ["M", "F"], default: "M" },
             { key: "FAMILY_SIZE", label: "Family Size", type: "number", min: 1, max: 10, default: 4 },
-            { key: "EDUCATION_LEVEL", label: "Education", type: "select", options: ["0 - No Formal Education", "1 - Primary/Secondary", "2 - Higher Secondary/Diploma", "3 - Graduate/Post-Graduate"], default: "1 - Primary/Secondary" },
-            { key: "LOCATION_TYPE", label: "Location", type: "select", options: ["Urban", "Semi-Urban", "Rural"], default: "Urban" },
-            { key: "DEVICE_TYPE", label: "Device", type: "select", options: ["basic", "smartphone"], default: "smartphone" },
+            { key: "EDUCATION_LEVEL", label: "Education", type: "select", options: ["0 - No Formal Education", "1 - Primary/Secondary", "2 - Higher Secondary/Diploma", "3 - Graduate/Post-Graduate"], default: "0 - No Formal Education" },
+            { key: "LOCATION_TYPE", label: "Location", type: "select", options: ["Urban", "Semi-Urban", "Rural"], default: "Rural" },
+            { key: "DEVICE_TYPE", label: "Device", type: "select", options: ["basic", "smartphone"], default: "basic" },
         ]
     },
     {
         section: "Income & Savings", fields: [
-            { key: "INCOME", label: "Monthly Income (₹)", type: "number", min: 0, max: 500000, default: 15000 },
-            { key: "SAVINGS_BALANCE", label: "Savings Balance (₹)", type: "number", min: 0, max: 1000000, default: 10000 },
-            { key: "RENT_PAYMENT", label: "Monthly Rent (₹)", type: "number", min: 0, max: 50000, default: 3000 },
-            { key: "EMPLOYMENT_STABILITY", label: "Employment Stability (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.5 },
-            { key: "BANK_ACCOUNT_AGE", label: "Bank Account Age (yrs)", type: "number", min: 0, max: 30, step: 0.5, default: 2 },
+            { key: "INCOME", label: "Monthly Income (₹)", type: "number", min: 0, max: 500000, default: 5000 },
+            { key: "SAVINGS_BALANCE", label: "Savings Balance (₹)", type: "number", min: 0, max: 1000000, default: 1000 },
+            { key: "RENT_PAYMENT", label: "Monthly Rent (₹)", type: "number", min: 0, max: 50000, default: 0 },
+            { key: "EMPLOYMENT_STABILITY", label: "Employment Stability (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.15 },
+            { key: "BANK_ACCOUNT_AGE", label: "Bank Account Age (yrs)", type: "number", min: 0, max: 30, step: 0.5, default: 0.5 },
         ]
     },
     {
         section: "Payment Behavior", fields: [
-            { key: "UPI_TRANSACTIONS", label: "Monthly UPI Txns", type: "number", min: 0, max: 500, default: 30 },
-            { key: "UPI_AVG_AMOUNT", label: "Avg UPI Amount (₹)", type: "number", min: 0, max: 10000, default: 200 },
-            { key: "UTILITY_BILLS_PAID", label: "Utility Bills (/6)", type: "number", min: 0, max: 6, default: 4 },
-            { key: "UTILITY_REGULARITY", label: "Bill Regularity (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.7 },
-            { key: "LOAN_REPAYMENT_HISTORY", label: "Loan Repay Score (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.3 },
-            { key: "MOBILE_RECHARGE_FREQ", label: "Mobile Recharges/month", type: "number", min: 0, max: 15, default: 3 },
+            { key: "UPI_TRANSACTIONS", label: "Monthly UPI Txns", type: "number", min: 0, max: 500, default: 5 },
+            { key: "UPI_AVG_AMOUNT", label: "Avg UPI Amount (₹)", type: "number", min: 0, max: 10000, default: 50 },
+            { key: "UTILITY_BILLS_PAID", label: "Utility Bills (/6)", type: "number", min: 0, max: 6, default: 1 },
+            { key: "UTILITY_REGULARITY", label: "Bill Regularity (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.2 },
+            { key: "LOAN_REPAYMENT_HISTORY", label: "Loan Repay Score (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.0 },
+            { key: "MOBILE_RECHARGE_FREQ", label: "Mobile Recharges/month", type: "number", min: 0, max: 15, default: 1 },
         ]
     },
     {
         section: "Digital & Social", fields: [
-            { key: "DIGITAL_FOOTPRINT", label: "Digital Footprint (0-100)", type: "number", min: 0, max: 100, default: 30 },
-            { key: "SOCIAL_MEDIA_ACTIVITY", label: "Social Media (0-100)", type: "number", min: 0, max: 100, default: 20 },
-            { key: "APP_USAGE_HOURS", label: "App Usage (hrs/day)", type: "number", min: 0, max: 15, step: 0.5, default: 2 },
-            { key: "E_COMMERCE_ACTIVITY", label: "E-Commerce (0-100)", type: "number", min: 0, max: 100, default: 10 },
+            { key: "DIGITAL_FOOTPRINT", label: "Digital Footprint (0-100)", type: "number", min: 0, max: 100, default: 5 },
+            { key: "SOCIAL_MEDIA_ACTIVITY", label: "Social Media (0-100)", type: "number", min: 0, max: 100, default: 3 },
+            { key: "APP_USAGE_HOURS", label: "App Usage (hrs/day)", type: "number", min: 0, max: 15, step: 0.5, default: 0.5 },
+            { key: "E_COMMERCE_ACTIVITY", label: "E-Commerce (0-100)", type: "number", min: 0, max: 100, default: 2 },
         ]
     },
     {
         section: "Other Signals", fields: [
-            { key: "NUM_FINANCIAL_PRODUCTS", label: "Financial Products", type: "number", min: 0, max: 10, default: 1 },
+            { key: "NUM_FINANCIAL_PRODUCTS", label: "Financial Products", type: "number", min: 0, max: 10, default: 0 },
             { key: "INSURANCE_STATUS", label: "Has Insurance", type: "select", options: ["0", "1"], default: "0" },
-            { key: "REMITTANCE_FREQUENCY", label: "Remittances/month", type: "number", min: 0, max: 15, default: 1 },
+            { key: "REMITTANCE_FREQUENCY", label: "Remittances/month", type: "number", min: 0, max: 15, default: 0 },
             { key: "GOVT_SUBSIDY_RECIPIENT", label: "Govt Subsidy", type: "select", options: ["0", "1"], default: "0" },
-            { key: "PEER_LENDING_SCORE", label: "Peer Lending (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.2 },
+            { key: "PEER_LENDING_SCORE", label: "Peer Lending (0-1)", type: "number", min: 0, max: 1, step: 0.05, default: 0.05 },
         ]
     }
 ];

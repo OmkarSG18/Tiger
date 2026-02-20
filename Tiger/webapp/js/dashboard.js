@@ -116,9 +116,12 @@ function calculateCIBILScore(data) {
     const activityLevel = Math.min(1, upiTxns / 50); // 50+ txns = full activity
 
     let creditExposureRaw;
-    if (upiTxns < 5) {
-        // Very few or no transactions — no demonstrable credit behavior
-        creditExposureRaw = 0.15 * activityLevel;
+    if (upiTxns === 0) {
+        // No transactions at all — virtually no credit behavior
+        creditExposureRaw = 0.02;
+    } else if (upiTxns < 5) {
+        // Very few transactions — minimal demonstrable credit behavior
+        creditExposureRaw = 0.05 + 0.10 * activityLevel;
     } else if (utilization <= 0.1) {
         creditExposureRaw = 0.7 + activityLevel * 0.2; // low usage but active
     } else if (utilization <= 0.3) {
@@ -128,12 +131,12 @@ function calculateCIBILScore(data) {
     } else if (utilization <= 0.75) {
         creditExposureRaw = 0.35 - (utilization - 0.5) * 1.0;
     } else {
-        creditExposureRaw = Math.max(0.05, 0.1 - (utilization - 0.75) * 0.4);
+        creditExposureRaw = Math.max(0.03, 0.1 - (utilization - 0.75) * 0.4);
     }
 
-    // Savings buffer (only a small bonus, not a rescue)
+    // Savings buffer (tiny bonus, NOT a rescue for zero-activity)
     const savingsRatio = Math.min(1, (data.SAVINGS_BALANCE || 0) / (income * 6));
-    creditExposureRaw = creditExposureRaw * 0.85 + savingsRatio * 0.15;
+    creditExposureRaw = creditExposureRaw * 0.92 + savingsRatio * 0.08;
     const creditExposureScore = Math.round(Math.min(1, Math.max(0, creditExposureRaw)) * 100);
 
     // ── 3. Credit Type & Duration (25%) ───────────────────────────────
@@ -158,16 +161,18 @@ function calculateCIBILScore(data) {
     const inquiryActivityProxy = (rechargeFreq * 0.3 + ecomActivity * 0.4 + digitalActivity * 0.3);
 
     let inquiryRaw;
-    if (inquiryActivityProxy <= 0.1) {
-        inquiryRaw = 0.3; // very low activity = no track record
+    if (inquiryActivityProxy <= 0.03) {
+        inquiryRaw = 0.05; // near-zero activity = essentially no track record
+    } else if (inquiryActivityProxy <= 0.1) {
+        inquiryRaw = 0.05 + inquiryActivityProxy * 2.5; // 0.05 -> 0.30
     } else if (inquiryActivityProxy <= 0.4) {
-        inquiryRaw = 0.3 + inquiryActivityProxy * 1.5; // building up, 0.3 -> 0.9
+        inquiryRaw = 0.30 + (inquiryActivityProxy - 0.1) * 1.83; // 0.30 -> 0.85
     } else if (inquiryActivityProxy <= 0.7) {
         inquiryRaw = 0.85; // moderate: optimal
     } else {
         inquiryRaw = 0.85 - (inquiryActivityProxy - 0.7) * 2.0; // too frequent: penalize harder
     }
-    inquiryRaw = Math.max(0.05, Math.min(1, inquiryRaw));
+    inquiryRaw = Math.max(0.03, Math.min(1, inquiryRaw));
 
     // Peer lending is a minor signal, not a rescue
     const peerScore = Math.min(1, (data.PEER_LENDING_SCORE || 0));
