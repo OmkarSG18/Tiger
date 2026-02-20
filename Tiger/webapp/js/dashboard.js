@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userRoleLabel').textContent = info.name;
     document.getElementById('userAvatar').textContent = info.icon;
 
+    // Set role switcher dropdown to current role
+    const roleSwitcher = document.getElementById('roleSwitcher');
+    if (roleSwitcher) roleSwitcher.value = currentRole;
+
     // Build language selector
     buildLanguageSelector('langSwitcher');
 
@@ -798,4 +802,9 @@ function showLoader(show) {
 // Format currency
 function formatCurrency(num) {
     return '\u20B9' + Math.round(num).toLocaleString('en-IN');
+}
+
+// ── Role Switcher ─────────────────────────────────────────────────────
+function switchRole(roleKey) {
+    window.location.href = `dashboard.html?role=${encodeURIComponent(roleKey)}`;
 }

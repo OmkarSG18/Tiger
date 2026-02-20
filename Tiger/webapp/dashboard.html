@@ -26,9 +26,18 @@
                     <span id="userRoleLabel">Loading...</span>
                     <div class="user-avatar" id="userAvatar">&#128100;</div>
                 </div>
-                <a href="index.html" class="btn btn-secondary" data-i18n="switchRole"
-                    style="font-size:0.8rem; padding:8px 16px;">&#8592; Switch
-                    Role</a>
+                <select class="form-select" id="roleSwitcher" onchange="switchRole(this.value)"
+                    style="font-size:0.8rem; padding:8px 12px; max-width:180px;">
+                    <option value="street_vendor">🛒 Street Vendor</option>
+                    <option value="domestic_worker">🏠 Domestic Worker</option>
+                    <option value="freelancer">💻 Freelancer</option>
+                    <option value="migrant_worker">🚂 Migrant Worker</option>
+                    <option value="kirana_owner">🏪 Kirana Store Owner</option>
+                    <option value="gig_worker">🛵 Gig Worker</option>
+                    <option value="student">🎓 College Student</option>
+                    <option value="rural_farmer">🌾 Rural Farmer</option>
+                    <option value="custom">✨ Custom Profile</option>
+                </select>
             </div>
         </div>
 
