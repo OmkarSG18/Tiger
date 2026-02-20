@@ -58,6 +58,24 @@ const PROFILES = {
                 REMITTANCE_FREQUENCY: 0, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 12,
                 PEER_LENDING_SCORE: 0.42
             }
+        },
+        {
+            id: "sv4",
+            name: "Bablu Prasad",
+            age: 50,
+            icon: "🛒",
+            story: "Migrated to Delhi recently. Sells peanuts at traffic signals. No bank account, uses only cash. No digital payments.",
+            data: {
+                ROLE: "Street Vendor", INCOME: 4000, UPI_TRANSACTIONS: 0, UPI_AVG_AMOUNT: 0,
+                UTILITY_BILLS_PAID: 0, UTILITY_REGULARITY: 0.0, MOBILE_RECHARGE_FREQ: 1,
+                RENT_PAYMENT: 0, SAVINGS_BALANCE: 500, LOAN_REPAYMENT_HISTORY: 0.0,
+                DIGITAL_FOOTPRINT: 2, SOCIAL_MEDIA_ACTIVITY: 0, EDUCATION_LEVEL: 0,
+                EMPLOYMENT_STABILITY: 0.1, FAMILY_SIZE: 7, AGE: 50, GENDER: "M",
+                LOCATION_TYPE: "Urban", DEVICE_TYPE: "basic", APP_USAGE_HOURS: 0.1,
+                BANK_ACCOUNT_AGE: 0, NUM_FINANCIAL_PRODUCTS: 0, INSURANCE_STATUS: 0,
+                REMITTANCE_FREQUENCY: 0, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 0,
+                PEER_LENDING_SCORE: 0.0
+            }
         }
     ],
 
@@ -96,6 +114,24 @@ const PROFILES = {
                 BANK_ACCOUNT_AGE: 2.0, NUM_FINANCIAL_PRODUCTS: 0, INSURANCE_STATUS: 0,
                 REMITTANCE_FREQUENCY: 0, GOVT_SUBSIDY_RECIPIENT: 1, E_COMMERCE_ACTIVITY: 3,
                 PEER_LENDING_SCORE: 0.1
+            }
+        },
+        {
+            id: "dw3",
+            name: "Asha Kumari",
+            age: 55,
+            icon: "🏠",
+            story: "Part-time cleaner, paid in cash. No bank account or UPI. Lives with relatives. No savings.",
+            data: {
+                ROLE: "Domestic Worker", INCOME: 5000, UPI_TRANSACTIONS: 0, UPI_AVG_AMOUNT: 0,
+                UTILITY_BILLS_PAID: 1, UTILITY_REGULARITY: 0.15, MOBILE_RECHARGE_FREQ: 1,
+                RENT_PAYMENT: 0, SAVINGS_BALANCE: 0, LOAN_REPAYMENT_HISTORY: 0.0,
+                DIGITAL_FOOTPRINT: 3, SOCIAL_MEDIA_ACTIVITY: 0, EDUCATION_LEVEL: 0,
+                EMPLOYMENT_STABILITY: 0.15, FAMILY_SIZE: 3, AGE: 55, GENDER: "F",
+                LOCATION_TYPE: "Rural", DEVICE_TYPE: "basic", APP_USAGE_HOURS: 0.0,
+                BANK_ACCOUNT_AGE: 0, NUM_FINANCIAL_PRODUCTS: 0, INSURANCE_STATUS: 0,
+                REMITTANCE_FREQUENCY: 0, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 0,
+                PEER_LENDING_SCORE: 0.0
             }
         }
     ],
@@ -175,6 +211,24 @@ const PROFILES = {
                 REMITTANCE_FREQUENCY: 10, GOVT_SUBSIDY_RECIPIENT: 1, E_COMMERCE_ACTIVITY: 5,
                 PEER_LENDING_SCORE: 0.18
             }
+        },
+        {
+            id: "mw3",
+            name: "Mohan Yadav",
+            age: 22,
+            icon: "🚂",
+            story: "Daily wage laborer, just arrived in Mumbai from rural Bihar. No bank account, no phone-based payments. Paid in cash daily.",
+            data: {
+                ROLE: "Migrant Worker", INCOME: 6000, UPI_TRANSACTIONS: 2, UPI_AVG_AMOUNT: 100,
+                UTILITY_BILLS_PAID: 0, UTILITY_REGULARITY: 0.0, MOBILE_RECHARGE_FREQ: 2,
+                RENT_PAYMENT: 1500, SAVINGS_BALANCE: 1000, LOAN_REPAYMENT_HISTORY: 0.0,
+                DIGITAL_FOOTPRINT: 5, SOCIAL_MEDIA_ACTIVITY: 3, EDUCATION_LEVEL: 0,
+                EMPLOYMENT_STABILITY: 0.1, FAMILY_SIZE: 6, AGE: 22, GENDER: "M",
+                LOCATION_TYPE: "Urban", DEVICE_TYPE: "basic", APP_USAGE_HOURS: 0.2,
+                BANK_ACCOUNT_AGE: 0.5, NUM_FINANCIAL_PRODUCTS: 0, INSURANCE_STATUS: 0,
+                REMITTANCE_FREQUENCY: 2, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 0,
+                PEER_LENDING_SCORE: 0.05
+            }
         }
     ],
 
@@ -252,6 +306,24 @@ const PROFILES = {
                 BANK_ACCOUNT_AGE: 3.0, NUM_FINANCIAL_PRODUCTS: 1, INSURANCE_STATUS: 1,
                 REMITTANCE_FREQUENCY: 0, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 30,
                 PEER_LENDING_SCORE: 0.45
+            }
+        },
+        {
+            id: "gw3",
+            name: "Imran Sheikh",
+            age: 20,
+            icon: "🛵",
+            story: "Recently joined as a delivery rider. No prior work history. Borrowed a friend's bike. Minimal savings.",
+            data: {
+                ROLE: "Gig Worker", INCOME: 8000, UPI_TRANSACTIONS: 3, UPI_AVG_AMOUNT: 100,
+                UTILITY_BILLS_PAID: 1, UTILITY_REGULARITY: 0.2, MOBILE_RECHARGE_FREQ: 2,
+                RENT_PAYMENT: 2000, SAVINGS_BALANCE: 2000, LOAN_REPAYMENT_HISTORY: 0.0,
+                DIGITAL_FOOTPRINT: 10, SOCIAL_MEDIA_ACTIVITY: 8, EDUCATION_LEVEL: 1,
+                EMPLOYMENT_STABILITY: 0.05, FAMILY_SIZE: 4, AGE: 20, GENDER: "M",
+                LOCATION_TYPE: "Urban", DEVICE_TYPE: "smartphone", APP_USAGE_HOURS: 3.0,
+                BANK_ACCOUNT_AGE: 0.5, NUM_FINANCIAL_PRODUCTS: 0, INSURANCE_STATUS: 0,
+                REMITTANCE_FREQUENCY: 1, GOVT_SUBSIDY_RECIPIENT: 0, E_COMMERCE_ACTIVITY: 2,
+                PEER_LENDING_SCORE: 0.05
             }
         }
     ],

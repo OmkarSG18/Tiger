@@ -89,84 +89,89 @@ function onProfileChange() {
 
 function calculateCIBILScore(data) {
     // ── 1. Payment History (30%) ──────────────────────────────────────
-    // Utility payment consistency + EMI/loan repayment track record
     const utilityRegularity = Math.min(1, data.UTILITY_REGULARITY || 0);      // 0-1
     const loanRepayment = Math.min(1, data.LOAN_REPAYMENT_HISTORY || 0);      // 0-1
-    const billsPaid = Math.min(1, (data.UTILITY_BILLS_PAID || 0) / 12);       // normalize to 12 months
-    const rentConsistency = data.RENT_PAYMENT > 0 ? 1 : 0;
+    const billsPaid = Math.min(1, (data.UTILITY_BILLS_PAID || 0) / 6);        // normalize to 6 months
+    const income = data.INCOME || 1;
+    // Rent proportional to income (rent / income ratio, capped)
+    const rentRatio = Math.min(1, (data.RENT_PAYMENT || 0) / (income * 0.3));
+    const rentScore = rentRatio > 0 ? rentRatio * 0.8 : 0; // no rent = 0
 
     const paymentHistoryRaw = (
-        utilityRegularity * 0.35 +
+        utilityRegularity * 0.30 +
         loanRepayment * 0.35 +
         billsPaid * 0.15 +
-        rentConsistency * 0.15
+        rentScore * 0.20
     );
     const paymentHistoryScore = Math.round(paymentHistoryRaw * 100);
 
     // ── 2. Credit Exposure / Utilization (25%) ────────────────────────
-    // Penalize if credit utilization > 30% of limit
-    const income = data.INCOME || 1;
-    const creditLimit = income * 3; // estimated credit limit = 3x income
-    const monthlySpend = (data.UPI_AVG_AMOUNT || 0) * (data.UPI_TRANSACTIONS || 0) / 30;
+    const upiTxns = data.UPI_TRANSACTIONS || 0;
+    const upiAvg = data.UPI_AVG_AMOUNT || 0;
+    const creditLimit = income * 3;
+    const monthlySpend = upiAvg * upiTxns / 30;
     const utilization = Math.min(1, monthlySpend / creditLimit);
 
+    // Activity level check: zero/very low transactions = NO credit history
+    const activityLevel = Math.min(1, upiTxns / 50); // 50+ txns = full activity
+
     let creditExposureRaw;
-    if (utilization <= 0.1) {
-        creditExposureRaw = 1.0; // excellent low usage
+    if (upiTxns < 5) {
+        // Very few or no transactions — no demonstrable credit behavior
+        creditExposureRaw = 0.15 * activityLevel;
+    } else if (utilization <= 0.1) {
+        creditExposureRaw = 0.7 + activityLevel * 0.2; // low usage but active
     } else if (utilization <= 0.3) {
-        creditExposureRaw = 0.9 - (utilization - 0.1) * 0.5; // good, 0.9 -> 0.8
+        creditExposureRaw = 0.85 - (utilization - 0.1) * 0.5;
     } else if (utilization <= 0.5) {
-        creditExposureRaw = 0.7 - (utilization - 0.3) * 1.5; // penalize, 0.7 -> 0.4
+        creditExposureRaw = 0.65 - (utilization - 0.3) * 1.5;
     } else if (utilization <= 0.75) {
-        creditExposureRaw = 0.4 - (utilization - 0.5) * 1.0; // harsh, 0.4 -> 0.15
+        creditExposureRaw = 0.35 - (utilization - 0.5) * 1.0;
     } else {
-        creditExposureRaw = Math.max(0.05, 0.15 - (utilization - 0.75) * 0.4);
+        creditExposureRaw = Math.max(0.05, 0.1 - (utilization - 0.75) * 0.4);
     }
 
-    // Savings buffer bonus
+    // Savings buffer (only a small bonus, not a rescue)
     const savingsRatio = Math.min(1, (data.SAVINGS_BALANCE || 0) / (income * 6));
-    creditExposureRaw = creditExposureRaw * 0.7 + savingsRatio * 0.3;
-    const creditExposureScore = Math.round(Math.min(1, creditExposureRaw) * 100);
+    creditExposureRaw = creditExposureRaw * 0.85 + savingsRatio * 0.15;
+    const creditExposureScore = Math.round(Math.min(1, Math.max(0, creditExposureRaw)) * 100);
 
     // ── 3. Credit Type & Duration (25%) ───────────────────────────────
-    // Reward diverse financial products, stable employment, long bank age
-    const financialProducts = Math.min(1, (data.NUM_FINANCIAL_PRODUCTS || 0) / 5);
+    const financialProducts = Math.min(1, (data.NUM_FINANCIAL_PRODUCTS || 0) / 3);
     const hasInsurance = data.INSURANCE_STATUS || 0;
     const employmentStability = Math.min(1, data.EMPLOYMENT_STABILITY || 0);
-    const bankAge = Math.min(1, (data.BANK_ACCOUNT_AGE || 0) / 10);
+    const bankAge = Math.min(1, (data.BANK_ACCOUNT_AGE || 0) / 8);
 
     const creditTypeRaw = (
-        financialProducts * 0.3 +
+        financialProducts * 0.25 +
         hasInsurance * 0.15 +
-        employmentStability * 0.3 +
+        employmentStability * 0.35 +
         bankAge * 0.25
     );
     const creditTypeScore = Math.round(creditTypeRaw * 100);
 
     // ── 4. New Credit / Inquiries (20%) ───────────────────────────────
-    // Penalize frequent recent loan applications
-    // Using e-commerce activity + frequent mobile recharges as proxy for inquiry behavior
     const rechargeFreq = Math.min(1, (data.MOBILE_RECHARGE_FREQ || 0) / 10);
     const ecomActivity = Math.min(1, (data.E_COMMERCE_ACTIVITY || 0) / 30);
-    // Low digital footprint hints fewer applications
     const digitalActivity = Math.min(1, (data.DIGITAL_FOOTPRINT || 0) / 100);
 
-    // Higher activity = more likely to have made inquiries (simulated)
     const inquiryActivityProxy = (rechargeFreq * 0.3 + ecomActivity * 0.4 + digitalActivity * 0.3);
-    // Moderate activity is ideal; too high suggests frequent inquiries
+
     let inquiryRaw;
-    if (inquiryActivityProxy <= 0.4) {
-        inquiryRaw = 0.6 + inquiryActivityProxy * 0.5; // low activity: decent, 0.6 -> 0.8
+    if (inquiryActivityProxy <= 0.1) {
+        inquiryRaw = 0.3; // very low activity = no track record
+    } else if (inquiryActivityProxy <= 0.4) {
+        inquiryRaw = 0.3 + inquiryActivityProxy * 1.5; // building up, 0.3 -> 0.9
     } else if (inquiryActivityProxy <= 0.7) {
         inquiryRaw = 0.85; // moderate: optimal
     } else {
-        inquiryRaw = 0.85 - (inquiryActivityProxy - 0.7) * 1.5; // too frequent: penalize
+        inquiryRaw = 0.85 - (inquiryActivityProxy - 0.7) * 2.0; // too frequent: penalize harder
     }
-    inquiryRaw = Math.max(0.1, Math.min(1, inquiryRaw));
+    inquiryRaw = Math.max(0.05, Math.min(1, inquiryRaw));
 
-    // Peer lending and community support boost
+    // Peer lending is a minor signal, not a rescue
     const peerScore = Math.min(1, (data.PEER_LENDING_SCORE || 0));
-    inquiryRaw = inquiryRaw * 0.8 + peerScore * 0.2;
+    inquiryRaw = inquiryRaw * 0.9 + peerScore * 0.1;
     const inquiryScore = Math.round(Math.min(1, inquiryRaw) * 100);
 
     // ── Final Weighted Score ──────────────────────────────────────────
