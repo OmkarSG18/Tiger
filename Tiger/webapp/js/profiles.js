@@ -383,7 +383,7 @@ const CUSTOM_FIELDS = [
             { key: "AGE", label: "Age", type: "number", min: 18, max: 70, default: 30 },
             { key: "GENDER", label: "Gender", type: "select", options: ["M", "F"], default: "M" },
             { key: "FAMILY_SIZE", label: "Family Size", type: "number", min: 1, max: 10, default: 4 },
-            { key: "EDUCATION_LEVEL", label: "Education (0-3)", type: "number", min: 0, max: 3, default: 1 },
+            { key: "EDUCATION_LEVEL", label: "Education", type: "select", options: ["0 - No Formal Education", "1 - Primary/Secondary", "2 - Higher Secondary/Diploma", "3 - Graduate/Post-Graduate"], default: "1 - Primary/Secondary" },
             { key: "LOCATION_TYPE", label: "Location", type: "select", options: ["Urban", "Semi-Urban", "Rural"], default: "Urban" },
             { key: "DEVICE_TYPE", label: "Device", type: "select", options: ["basic", "smartphone"], default: "smartphone" },
         ]

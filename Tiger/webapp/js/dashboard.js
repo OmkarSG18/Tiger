@@ -759,7 +759,10 @@ function submitCustomProfile() {
         section.fields.forEach(field => {
             const el = document.getElementById(`cf_${field.key}`);
             if (el) {
-                data[field.key] = field.type === 'select' ? el.value : parseFloat(el.value);
+                let val = field.type === 'select' ? el.value : parseFloat(el.value);
+                // Extract numeric prefix for EDUCATION_LEVEL (e.g. "1 - Primary/Secondary" → 1)
+                if (field.key === 'EDUCATION_LEVEL') val = parseInt(val.charAt(0));
+                data[field.key] = val;
             }
         });
     });
